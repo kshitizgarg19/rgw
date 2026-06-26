@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000" role="img" aria-label="Ghiya Barfi in a premium box">
+  <defs>
+    <linearGradient id="box" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#2f93a0"/><stop offset="1" stop-color="#14606b"/>
+    </linearGradient>
+    <linearGradient id="band" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f0a23a"/><stop offset="1" stop-color="#d2812a"/>
+    </linearGradient>
+    <linearGradient id="barfi" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#cfe0a0"/><stop offset="0.45" stop-color="#aec873"/><stop offset="1" stop-color="#93ad57"/>
+    </linearGradient>
+    <pattern id="grid" width="116" height="116" patternUnits="userSpaceOnUse">
+      <rect x="7" y="7" width="102" height="102" rx="13" fill="url(#barfi)"/>
+      <rect x="7" y="7" width="102" height="34" rx="13" fill="#ffffff" opacity="0.18"/>
+      <rect x="7" y="86" width="102" height="23" rx="13" fill="#5f7a33" opacity="0.16"/>
+      <ellipse cx="40" cy="42" rx="7" ry="2.6" fill="#5f7a33" transform="rotate(-22 40 42)"/>
+      <ellipse cx="74" cy="66" rx="6" ry="2.3" fill="#caa15a" transform="rotate(24 74 66)"/>
+    </pattern>
+  </defs>
+
+  <rect x="172" y="648" width="656" height="108" rx="18" fill="url(#band)"/>
+  <rect x="172" y="648" width="656" height="108" rx="18" fill="#000" opacity="0.07"/>
+  <rect x="172" y="184" width="656" height="494" rx="26" fill="url(#box)"/>
+  <rect x="172" y="184" width="656" height="120" rx="26" fill="#ffffff" opacity="0.08"/>
+  <rect x="172" y="184" width="656" height="494" rx="26" fill="none" stroke="#0c4953" stroke-width="3" opacity="0.5"/>
+  <rect x="214" y="226" width="572" height="410" rx="14" fill="#fbf6ec"/>
+  <rect x="214" y="226" width="572" height="410" rx="14" fill="none" stroke="#e7d4ac" stroke-width="2"/>
+  <clipPath id="tray"><rect x="230" y="242" width="540" height="378" rx="9"/></clipPath>
+  <g clip-path="url(#tray)"><rect x="230" y="242" width="580" height="406" fill="url(#grid)"/></g>
+</svg>

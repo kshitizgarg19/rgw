@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Warm heritage sweet shop interior">
+  <defs>
+    <linearGradient id="wall" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fbeeda"/><stop offset="0.55" stop-color="#f6e2c0"/><stop offset="1" stop-color="#efd2a6"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.32" r="0.6">
+      <stop offset="0" stop-color="#ffe6a8" stop-opacity="0.9"/><stop offset="1" stop-color="#ffe6a8" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="arch" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff6e6"/><stop offset="1" stop-color="#f3dcb0"/>
+    </linearGradient>
+    <linearGradient id="brass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e6c772"/><stop offset="0.5" stop-color="#c49a3f"/><stop offset="1" stop-color="#9a772a"/>
+    </linearGradient>
+    <linearGradient id="floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e7c693"/><stop offset="1" stop-color="#d8b079"/>
+    </linearGradient>
+    <pattern id="jars" width="150" height="120" patternUnits="userSpaceOnUse">
+      <g opacity="0.55">
+        <rect x="52" y="46" width="46" height="62" rx="10" fill="#caa15a"/>
+        <rect x="52" y="46" width="46" height="22" rx="10" fill="#e6c772"/>
+        <ellipse cx="75" cy="40" rx="26" ry="12" fill="#b98a3f"/>
+        <circle cx="75" cy="78" r="11" fill="#7c4a1e" opacity="0.4"/>
+      </g>
+    </pattern>
+  </defs>
+
+  <rect width="1440" height="900" fill="url(#wall)"/>
+  <rect width="1440" height="900" fill="url(#halo)"/>
+
+  <!-- side pillars -->
+  <rect x="60" y="60" width="70" height="780" rx="14" fill="url(#brass)" opacity="0.35"/>
+  <rect x="1310" y="60" width="70" height="780" rx="14" fill="url(#brass)" opacity="0.35"/>
+
+  <!-- central arch (back wall opening) -->
+  <path d="M360 840 L360 360 Q720 110 1080 360 L1080 840 Z" fill="url(#arch)" opacity="0.9"/>
+  <path d="M360 840 L360 360 Q720 110 1080 360 L1080 840" fill="none" stroke="url(#brass)" stroke-width="8" opacity="0.6"/>
+  <path d="M392 840 L392 372 Q720 150 1048 372 L1048 840" fill="none" stroke="url(#brass)" stroke-width="2.5" opacity="0.5"/>
+
+  <!-- shelves with jars inside arch -->
+  <g clip-path="url(#archclip)">
+    <clipPath id="archclip"><path d="M392 836 L392 372 Q720 150 1048 372 L1048 836 Z"/></clipPath>
+    <g clip-path="url(#archclip)">
+      <rect x="392" y="430" width="656" height="120" fill="url(#jars)"/>
+      <rect x="392" y="540" width="656" height="14" rx="6" fill="url(#brass)" opacity="0.55"/>
+      <rect x="392" y="600" width="656" height="120" fill="url(#jars)"/>
+      <rect x="392" y="710" width="656" height="14" rx="6" fill="url(#brass)" opacity="0.55"/>
+    </g>
+  </g>
+
+  <!-- hanging brass lamp -->
+  <line x1="720" y1="60" x2="720" y2="180" stroke="#b98a3f" stroke-width="3" opacity="0.7"/>
+  <ellipse cx="720" cy="210" rx="46" ry="34" fill="url(#brass)" opacity="0.85"/>
+  <ellipse cx="720" cy="250" rx="120" ry="60" fill="url(#halo)"/>
+
+  <!-- floor -->
+  <rect x="0" y="820" width="1440" height="80" fill="url(#floor)"/>
+  <rect x="0" y="820" width="1440" height="10" fill="#fff" opacity="0.25"/>
+</svg>

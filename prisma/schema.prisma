@@ -1,0 +1,139 @@
+// RGW Sweets — data model (SQLite for local dev; swap `provider` to
+// "postgresql" + DATABASE_URL for Vercel/production).
+// Enums and arrays are stored as Strings/JSON because SQLite lacks native
+// support; helpers in src/lib/* (de)serialize them.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Product {
+  id               String      @id @default(cuid())
+  slug             String      @unique
+  name             String
+  tagline          String
+  price            Int // in rupees
+  weight           String
+  accent           String // "mawa" | "pistachio"
+  shortDescription String
+  description      String
+  story            String
+  ingredients      String // JSON string[]
+  notes            String // JSON string[]
+  images           String // JSON string[]
+  ratingAvg        Float       @default(0)
+  ratingCount      Int         @default(0)
+  stock            Int         @default(100)
+  active           Boolean     @default(true)
+  sortOrder        Int         @default(0)
+  reviews          Review[]
+  orderItems       OrderItem[]
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  product      Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productId    String?
+  productSlug  String?
+  customerName String
+  rating       Int // 1..5
+  comment      String
+  approved     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+
+  @@index([productId])
+}
+
+model Customer {
+  id        String   @id @default(cuid())
+  name      String
+  phone     String   @unique
+  email     String?
+  orders    Order[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id             String      @id @default(cuid())
+  orderNumber    String      @unique
+  customer       Customer?   @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  customerId     String?
+  // delivery snapshot
+  fullName       String
+  mobile         String
+  email          String?
+  houseNumber    String
+  street         String
+  landmark       String?
+  city           String
+  state          String
+  pincode        String
+  // money (rupees)
+  subtotal       Int
+  deliveryCharge Int         @default(0)
+  discount       Int         @default(0)
+  total          Int
+  couponCode     String?
+  // status
+  paymentStatus  String      @default("PENDING") // PENDING | PAID | FAILED
+  paymentRef     String?
+  orderStatus    String      @default("NEW") // NEW | PROCESSING | SHIPPED | DELIVERED | CANCELLED
+  notes          String?
+  items          OrderItem[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  @@index([orderStatus])
+  @@index([paymentStatus])
+}
+
+model OrderItem {
+  id          String   @id @default(cuid())
+  order       Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId     String
+  product     Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  productId   String?
+  productSlug String
+  name        String
+  price       Int
+  quantity    Int
+  lineTotal   Int
+}
+
+model Coupon {
+  id         String    @id @default(cuid())
+  code       String    @unique
+  type       String // "PERCENT" | "FIXED"
+  value      Int
+  minOrder   Int       @default(0)
+  expiresAt  DateTime?
+  active     Boolean   @default(true)
+  usageCount Int       @default(0)
+  createdAt  DateTime  @default(now())
+}
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("STAFF_ADMIN") // SUPER_ADMIN | STAFF_ADMIN
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// Editable site content (homepage copy, brand story, contact, shipping, etc.)
+model SiteContent {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String // JSON or plain text
+  updatedAt DateTime @updatedAt
+}
