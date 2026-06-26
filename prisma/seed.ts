@@ -8,25 +8,15 @@ async function main() {
   console.log("🌱 Seeding RGW Sweets…");
 
   // ── Products ──────────────────────────────────────────────────────────
+  // Create-if-absent so re-running (e.g. on every deploy) never overwrites
+  // edits made in the admin panel.
+  let createdProducts = 0;
   for (let i = 0; i < PRODUCTS.length; i++) {
     const p = PRODUCTS[i];
-    await prisma.product.upsert({
-      where: { slug: p.slug },
-      update: {
-        name: p.name,
-        tagline: p.tagline,
-        price: p.price,
-        weight: p.weight,
-        accent: p.accent,
-        shortDescription: p.shortDescription,
-        description: p.description,
-        story: p.story,
-        ingredients: JSON.stringify(p.ingredients),
-        notes: JSON.stringify(p.notes),
-        images: JSON.stringify(p.images),
-        sortOrder: i,
-      },
-      create: {
+    const existing = await prisma.product.findUnique({ where: { slug: p.slug } });
+    if (existing) continue;
+    await prisma.product.create({
+      data: {
         slug: p.slug,
         name: p.name,
         tagline: p.tagline,
@@ -44,8 +34,9 @@ async function main() {
         active: true,
       },
     });
+    createdProducts++;
   }
-  console.log(`  ✓ ${PRODUCTS.length} products`);
+  console.log(`  ✓ products (${createdProducts} created, ${PRODUCTS.length - createdProducts} kept)`);
 
   // ── Super Admin ───────────────────────────────────────────────────────
   const email = process.env.ADMIN_EMAIL || "admin@rgwsweets.in";
